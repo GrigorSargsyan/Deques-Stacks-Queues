@@ -1,0 +1,77 @@
+﻿CSE 12 - Summer 2016 HW 2: Deques, Stacks, Queues
+Due: Monday, July 11 11:59PM
+Points: 160 points
+
+
+In this assignment you will implement data structures that provide an implementation for three abstract data types:  A double-ended queue using a circular array, a stack and a queue.  Also, along the way you will get more experience with implementing Java interfaces, writing JUnit test cases, and using the Adapter design pattern.
+
+
+Below is a link to an overview video for this assignment, but READ THIS PARAGRAPH BEFORE WATCHING IT.  Note that this video was recorded based on the 2014 version of the assignment, but that assignment was almost identical so why waste a good video!  The only difference between the assignments is that this year I’m allowing you to work in groups of up to 4 to develop the BoundedDequeTester (and only the tester).  I have also removed the MineSweeper component.  OK, now that you’ve read the disclaimer in this paragraph, click this link to watch the video (first 9 minutes).
+
+
+This assignment is an individual assignment, with the exception of the BoundedDequeTester.   You may ask Professors/TAs/Tutors for some guidance and help, but you can’t copy code.   You can, of course, discuss the assignment with your classmates, including discussing testing strategies, concepts, implementation strategies, and bugs you ran into and how you fixed them.  But don’t look at or copy each others code or written answers.
+
+
+START EARLY!
+
+
+The following files are provided for you and can be found on the HW page:
+●       BoundedDeque.java
+●       BoundedStack.java
+●       BoundedQueue.java
+●       Stack12Tester.java
+●       Queue12Tester.java
+●       Javadocs for BoundedDeque, BoundedStack, and BoundedQueue
+ 
+Logistics:
+In  EACH AND EVERY FILE that you turn in, we need the following in comments at the top of each file. 
+ 
+NAME: <your name>
+ID: <your student ID>
+LOGIN: <your class login>
+
+
+You will submit the following files for this assignment:
+●       Deque12.java: A Java class that implements the BoundedDeque interface using a circular array.
+●       Stack12.java: A Java class that implements the BoundedStack interface
+●       Queue12.java: A Java class that implements the BoundedQueue interface
+●       BoundedDequeTester.java: A JUnit tester for the Deque12 class.
+Part 1: Deque12 and BoundedDequeTester [120 points]
+BoundedDequeTester.java
+Note: you may work in a group of up to 4 students to develop your BoundedDequeTester (and only  the tester, NOT the Deque12!).  Rules for collaboration, documentation of your collaboration and submission are the same as they were for Homework 1.  READ THEM (see the second to third page) and make sure you follow them.
+
+
+Read the documentation in the source code file for the BoundedDeque<E> interface, or view the javadoc page for BoundedDeque which is included in the HW2 resources. Understand the responsibilities of each method required by the interface. Sketch a test plan for a class that implements this interface. Define a class named BoundedDequeTester that implements your test plan, using an Deque12 object as a test fixture.
+
+
+The class you will be testing is Deque12, which implements BoundedDeque, and which you will be defining as part of this assignment. You should have at least one test for every method, but it is better form to create multiple tests for some methods depending on the condition you are testing.  For example, you’ll probably want a separate test for adding to a full Deque from the test for adding to a non-full Deque.  
+
+
+As a practical matter, you do not need to completely write your BoundedDequeTester program before starting to define Deque12. In fact, an iterative test-driven development process can work well: write some tests in BoundedDequeTester, and implement the functionality in Deque12 that will be tested by those tests, test that functionality with BoundedDequeTester, write more tests, etc. The end result will (hopefully!) be the same: A good tester, and a good implementation of the class being tested.
+
+
+As for previous (and future) assignments, make sure that your BoundedDequeTester does not depend on anything not specified by the documentation of the BoundedDeque interface and the Deque12 class. For example, do not make use of any other constructors or instance or static methods or variables than the ones required in the documentation.
+Deque12.java
+Define a generic class Deque12<E> that implements the BoundedDeque<E> interface. Besides the requirements for the methods and constructor documented in that interface, for this assignment there is the additional requirement that this implementation must use a circular array to hold its elements. (Note also that, as for other assignments, your Deque12 should not define any public methods or constructors other than those in the interface specification.)
+
+
+A circular array can be rather tricky to implement correctly! It will be worth your time to sketch it out on paper before you start writing code.
+
+
+You will of course need to create an array with length equal to the capacity of the Deque12 object. Because raw arrays don’t play nicely with generics, you should use an ArrayList object for this purpose.   However there are a couple of subtleties to look out for when using an ArrayList instead of an array:
+* Be careful with the difference between the ArrayList’s add method and its set method.  You’ll almost certainly want to use set, not add.  But this means that you must add capacity items to your ArrayList before you do anything else (i.e. in the constructor), or set will throw an IndexOutOfBounds error.
+* Remember that no matter what size you initialize your ArrayList, it can always be increased, so be careful not to accidentally grow your ArrayList beyond your BoundedDeque’s capacity.  If you only use set and not add, you should not run into this problem.
+
+
+You will want to have instance variables for the size of the Deque12 (how many data elements it is currently holding), and to indicate which elements of the array are the current front and back elements. Think about what the values of these instance variables should be if the Deque12 is empty, or has one element, or is full (has size equal to its capacity). And in each case, think carefully about what needs to change for an element to be added or removed from the front or the back. Different solutions are possible, as long as all the design decisions you make are consistent with each other, and with the requirements of the interface you are implementing.
+Part 2: Stack12 and Queue12 [40 points]
+Now that you have your Deque built and fully tested, you will use it to implement a Stack and a Queue.  
+Stack12.java
+Read and understand the interface specification in BoundedStack.java (or view the javadoc page for BoundedStack which is included in the HW2 resources) and then define a generic class Stack12<E> that implements the BoundedStack<E> interface. Once Deque12 is implemented and tested and debugged, defining Stack12 is quite easy. We’ve provided you with some unit tests that you can use to test your implementation.  Note that the methods required by the BoundedStack interface are different from, though closely related to, the BoundedDeque interface methods. Use the Adapter pattern!  That is, in your Stack12 class, create an instance variable of type BoundedDeque (instantiated to a Deque12) and use it to perform all of the necessary BoundedStack methods.  If this class is complicated, you’re over-thinking it.
+Queue12.java
+Read and understand the interface specification in BoundedQueue.java (or view the javadoc page for BoundedQueue which is included in the HW2 resources) and then define a generic class Queue12<E> that implements the BoundedQueue<E> interface. As with Stack12, if Deque12 is already implemented and tested and debugged, defining Queue12 is quite easy. Again note that the methods required by the BoundedQueue interface are different from, though closely related to, the BoundedDeque interface methods, and so the Adapter pattern is applicable here as well.
+
+
+As is often the case when the Adapter pattern is used, if the adapted class (Deque12 in this case) is tested and debugged, the adapting class shouldn't need much testing, because almost all of the work is being handled by delegation to the adapted class's methods. We provide you with a few simple tests which should be sufficient.
+Turn in via Vocareum
+Submit all the required files.
